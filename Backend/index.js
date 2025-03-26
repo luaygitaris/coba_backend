@@ -1,4 +1,5 @@
-import { config } from 'dotenv'; // Import dotenv before anything else
+import 'dotenv/config.js'
+import { config } from 'dotenv';
 import express from 'express';
 import pkg from 'pg';
 import cors from 'cors';
