@@ -1,12 +1,13 @@
-import 'dotenv/config.js'
-import { config } from 'dotenv';
+import { config } from 'dotenv'; // Import dotenv before anything else
 import express from 'express';
 import pkg from 'pg';
-import cors from 'cors'
+import cors from 'cors';
 
+// Load environment variables
+config();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Use environment PORT or fallback to 3000
 const { Pool } = pkg;
 
 const pool = new Pool({
@@ -16,15 +17,15 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
+app.use(cors()); // CORS middleware before the routes
+app.use(express.json()); // Express JSON middleware before the routes
 
-config();
-
-app.use(cors());
-
-app.listen(process.env.PORT, () => console.log(`Server running on ${process.env.PORT} PORT`));
-
-app.use(express.json());
-
+// Routes
 app.get('/', (req, res) => {
     res.send('API Working');
+});
+
+// Start server
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
